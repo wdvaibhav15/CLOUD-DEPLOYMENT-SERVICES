@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Deploy to EC2
+      - name: Deploy via ssh
         uses: appleboy/ssh-action@v0.5.3
         with:
           host: ${{ secrets.EC2_SSH_HOST_NAME }}
