@@ -1,4 +1,4 @@
-name: deploy to ec2
+name: Deploy to EC2
 
 on:
   push:
@@ -13,16 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Set up SSH
+      - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.EC2_SSH_HOST_NAME }}
+          host: ${{ secrets.EC2_SSH_HOST_NAME }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/CLOUD-DEPLOYMENT-SERVICES
-            git pull
+            git pull origin main
             sudo docker-compose down
-            sudo docker-compose up -d build
-
-      
+            sudo docker-compose up -d --build
