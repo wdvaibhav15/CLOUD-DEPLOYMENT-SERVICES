@@ -1,0 +1,28 @@
+name: deploy to ec2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up SSH
+        uses: appleboy/ssh-action@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_HOST_NAME }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/CLOUD-DEPLOYMENT-SERVICES
+            git pull
+            sudo docker-compose down
+            sudo docker-compose up -d build
+
+      

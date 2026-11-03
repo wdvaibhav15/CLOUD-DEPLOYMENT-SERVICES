@@ -1,0 +1,6 @@
+services:
+    cloud-services:
+      build: ./
+      ports:
+        - "3001:3000"
+  
